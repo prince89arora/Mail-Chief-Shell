@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# array of evnet file paths
+declare -a event_files
+
+# get current date from system.
+currentDate=$(date +'%Y-%m-%d')
+
+# searching for all the event files based on current date
+event_files=($(find ~/Library/Calendars/ -name "*.ics" -newermt $currentDate))
+
+# iterating thorugh all event files and processing event
+for f in ${event_files[@]}; do
+	./process ${f}
+done

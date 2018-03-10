@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# function to formate string date value in to proper date formate.
+# date formate will be dd-MM-yyyyT hh:mm:ss
+formate_date () {
+  local year=${1:0:4} local month=${1:4:2} local day=${1:6:2}
+  echo "$day-$month-$year"
+}
+
+#processing a given event file
+file=$1
+
+#getting summary for event.
+summary=$(grep -h -e 'SUMMARY:*' $file | sed 's/SUMMARY://g')
+start=$(grep -h -e 'DTSTART;*' $file | sed 's/^DTSTART;TZID=Asia\/Kolkata://g')
+
+echo "$start"
+start_date=$(formate_date "$start")
+
+echo "$start_date"
