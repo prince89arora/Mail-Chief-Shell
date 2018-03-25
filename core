@@ -4,10 +4,11 @@
 declare -a event_files
 
 # get current date from system.
-currentDate=$(date +'%Y-%m-%d')
+tomorrow=$(date -v+1d +'%Y%m%d')
+date_to_search="START;TZID=Asia/Kolkata:"$tomorrow"T"
 
 # searching for all the event files based on current date
-event_files=($(find ~/Library/Calendars/ -name "*.ics" -newermt $currentDate))
+event_files=($(find ~/Library/Calendars/ -type f -name "*.ics" | xargs egrep -i $date_to_search | sed 's/:.*//'))
 
 # iterating thorugh all event files and processing event
 for f in ${event_files[@]}; do

@@ -14,7 +14,19 @@ file=$1
 summary=$(grep -h -e 'SUMMARY:*' $file | sed 's/SUMMARY://g')
 start=$(grep -h -e 'DTSTART;*' $file | sed 's/^DTSTART;TZID=Asia\/Kolkata://g')
 
-echo "$start"
 start_date=$(formate_date "$start")
 
-echo "$start_date"
+echo "working on event: Summary - ${summary}, On - ${start_date}"
+echo $summary
+
+case $summary in
+    *OFF*)
+        echo "sending mail of off"
+       ;;
+
+    WFH)
+        echo "mail for WFH"
+        ;;
+esac
+
+
